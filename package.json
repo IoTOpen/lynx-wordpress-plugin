@@ -1,0 +1,32 @@
+{
+	"name": "iot-open-lynx",
+	"version": "0.2.0",
+	"description": "WordPress block that shows live values from IoT Open Lynx.",
+	"author": "IoT Open AB",
+	"license": "GPL-2.0-or-later",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/IoTOpen/lynx-wordpress-plugin.git"
+	},
+	"files": [
+		"build",
+		"includes",
+		"languages",
+		"iot-open-lynx.php",
+		"uninstall.php",
+		"readme.txt",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.23.0"
+	}
+}

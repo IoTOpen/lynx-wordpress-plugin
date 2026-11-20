@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "iot-open-lynx/iot-open-block",
+	"version": "0.2.0",
+	"title": "IoT Open Lynx value",
+	"category": "widgets",
+	"icon": "chart-line",
+	"keywords": [ "iot", "lynx", "sensor", "live" ],
+	"description": "Shows a live value from an IoT Open Lynx function.",
+	"textdomain": "iot-open-lynx",
+	"supports": {
+		"html": false,
+		"align": [ "left", "center", "right", "wide" ],
+		"spacing": {
+			"margin": true
+		}
+	},
+	"attributes": {
+		"lynxId": {
+			"type": "string",
+			"default": ""
+		},
+		"installationId": {
+			"type": "string",
+			"default": ""
+		},
+		"deviceId": {
+			"type": "string",
+			"default": ""
+		},
+		"functionId": {
+			"type": "string",
+			"default": ""
+		},
+		"refreshInterval": {
+			"type": "number",
+			"default": 60
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#000000"
+		},
+		"valueColor": {
+			"type": "string",
+			"default": "#1e73be"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#f9f9f9"
+		},
+		"valueFontSize": {
+			"type": "number",
+			"default": 48
+		},
+		"functionFontSize": {
+			"type": "number",
+			"default": 14
+		},
+		"deviceFontSize": {
+			"type": "number",
+			"default": 14
+		},
+		"lastUpdatedFontSize": {
+			"type": "number",
+			"default": 10
+		},
+		"lastUpdatedPosition": {
+			"type": "string",
+			"default": "right",
+			"enum": [ "left", "right", "center", "middle" ]
+		},
+		"showValues": {
+			"type": "object",
+			"default": {
+				"value": true,
+				"functionName": true,
+				"deviceName": false,
+				"installationName": false,
+				"lastUpdated": false,
+				"countdown": false
+			}
+		}
+	},
+	"example": {
+		"attributes": {
+			"lynxId": "",
+			"functionId": ""
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

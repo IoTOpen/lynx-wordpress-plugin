@@ -1,0 +1,65 @@
+/**
+ * Front end and editor styles. Colors and font sizes chosen in the block
+ * settings are applied as inline styles by render.php.
+ */
+
+.iot-open-lynx {
+
+	.iot-block-content {
+		border: 1px solid #ddd;
+		padding: 10px;
+		background-color: #f9f9f9;
+		border-radius: 6px;
+		text-align: center;
+	}
+
+	p {
+		margin: 0.5em 0;
+	}
+
+	.iot-block-installationName,
+	.iot-block-deviceName,
+	.iot-block-functionName {
+		font-size: 14px;
+		color: #555;
+		margin: 4px 0;
+	}
+
+	.iot-block-value {
+		font-size: 48px;
+		font-weight: 700;
+		line-height: 1.1;
+		color: #1e73be;
+		margin: 8px 0;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.iot-block-lastUpdated {
+		font-size: 10px;
+		text-align: right;
+	}
+
+	.iot-block-progress-wrapper {
+		position: relative;
+		width: 100%;
+		height: 4px;
+		overflow: hidden;
+	}
+
+	.iot-block-progress {
+		height: 100%;
+		width: 100%;
+		background-color: #1e73be;
+	}
+
+	&.is-error .iot-block-value {
+		opacity: 0.5;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.iot-open-lynx .iot-block-progress {
+		transition: none !important;
+	}
+}
