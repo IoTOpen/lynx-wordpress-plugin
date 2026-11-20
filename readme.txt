@@ -46,8 +46,7 @@ What is sent, and when:
 
 No information about visitors (such as IP addresses or cookies) is sent to Lynx.
 
-IoT Open AB terms of service: TODO-TERMS-URL
-IoT Open AB privacy policy: TODO-PRIVACY-URL
+IoT Open AB privacy policy: https://iotopen.io/en/privacy-policy/
 
 == Installation ==
 
