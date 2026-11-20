@@ -106,7 +106,7 @@ Before the first submission:
 
 - [ ] Make this repository public (the readme links to it as the source code).
 - [x] Link the privacy policy in `readme.txt` (IoT Open has no public terms of service page).
-- [ ] Set `Contributors` in `readme.txt` to the WordPress.org user name(s) of the
+- [x] Set `Contributors` in `readme.txt` to the WordPress.org user name(s) of the
       account that submits the plugin.
 - [ ] Test on the WordPress version in `Tested up to` and run the
       [Plugin Check](https://wordpress.org/plugins/plugin-check/) plugin.

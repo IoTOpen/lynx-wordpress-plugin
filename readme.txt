@@ -1,10 +1,10 @@
 === IoT Open Lynx ===
-Contributors:      iotopen
+Contributors:      rejas
 Tags:              iot, sensor, block, live data, dashboard
 Requires at least: 6.7
 Tested up to:      7.1
 Requires PHP:      7.4
-Stable tag:        0.3.2
+Stable tag:        0.3.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,9 @@ Create a dedicated Lynx user with read access to the installations you want to s
 Yes. Add a `wp_name` metadata field to the function or device in Lynx.
 
 == Changelog ==
+
+= 0.3.3 =
+* Readme: set contributors.
 
 = 0.3.2 =
 * Readme: link to the IoT Open privacy policy.
