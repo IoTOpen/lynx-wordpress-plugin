@@ -4,7 +4,7 @@ Tags:              iot, sensor, block, live data, dashboard
 Requires at least: 6.7
 Tested up to:      7.1
 Requires PHP:      7.4
-Stable tag:        0.3.4
+Stable tag:        0.3.5
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,9 @@ Create a dedicated Lynx user with read access to the installations you want to s
 Yes. Add a `wp_name` metadata field to the function or device in Lynx.
 
 == Changelog ==
+
+= 0.3.5 =
+* Banner and icon for the plugin directory.
 
 = 0.3.4 =
 * Readme: add the iotopen account to contributors.
