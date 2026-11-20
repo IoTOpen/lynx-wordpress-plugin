@@ -5,6 +5,7 @@
  * it at the configured interval. Plain DOM, no React, so visitors only
  * download a few hundred bytes.
  */
+import { domReady, fieldText, poll } from '../shared/poll';
 
 function setup( el ) {
 	let config;
@@ -14,10 +15,8 @@ function setup( el ) {
 		return;
 	}
 
-	const intervalMs = Math.max( 10, Number( config.refresh ) || 60 ) * 1000;
 	const progress = el.querySelector( '.iot-block-progress' );
-	let timer = null;
-	let lastFetch = 0;
+	let intervalMs = 0;
 
 	const restartCountdown = () => {
 		if ( ! progress ) {
@@ -32,70 +31,21 @@ function setup( el ) {
 		progress.style.width = '0%';
 	};
 
-	const apply = ( data ) => {
-		el.querySelectorAll( '[data-field]' ).forEach( ( node ) => {
-			const value = data[ node.dataset.field ];
-			if ( node.dataset.field === 'formatted' ) {
-				node.textContent =
-					value !== undefined && value !== null && value !== ''
-						? value
-						: '–';
-			} else if ( value !== undefined && value !== null ) {
-				node.textContent = value;
-			}
-		} );
-	};
-
-	const refresh = async () => {
-		lastFetch = Date.now();
-		const url = new URL( config.endpoint, window.location.href );
-		url.searchParams.set( 'backend', config.backend );
-		url.searchParams.set( 'installation', config.installation );
-		url.searchParams.set( 'function', config.function );
-		url.searchParams.set( 'token', config.token );
-		try {
-			const response = await window.fetch( url, {
-				credentials: 'omit',
+	intervalMs = poll( config, {
+		onData: ( data ) => {
+			el.querySelectorAll( '[data-field]' ).forEach( ( node ) => {
+				const text = fieldText( data, node.dataset.field );
+				if ( text !== null ) {
+					node.textContent = text;
+				}
 			} );
-			if ( ! response.ok ) {
-				throw new Error( `HTTP ${ response.status }` );
-			}
-			apply( await response.json() );
 			el.classList.remove( 'is-error' );
-		} catch ( e ) {
-			el.classList.add( 'is-error' );
-		}
-		restartCountdown();
-	};
-
-	const schedule = () => {
-		window.clearInterval( timer );
-		timer = window.setInterval( () => {
-			if ( ! document.hidden ) {
-				refresh();
-			}
-		}, intervalMs );
-	};
-
-	// Catch up immediately when a hidden tab becomes visible again.
-	document.addEventListener( 'visibilitychange', () => {
-		if ( ! document.hidden && Date.now() - lastFetch >= intervalMs ) {
-			refresh();
-			schedule();
-		}
+		},
+		onError: () => el.classList.add( 'is-error' ),
+		onCycle: restartCountdown,
 	} );
-
-	// The server-rendered value may come from a page cache, so refresh once now.
-	refresh();
-	schedule();
 }
 
-function init() {
+domReady( () => {
 	document.querySelectorAll( '.iot-open-lynx[data-config]' ).forEach( setup );
-}
-
-if ( document.readyState === 'loading' ) {
-	document.addEventListener( 'DOMContentLoaded', init );
-} else {
-	init();
-}
+} );

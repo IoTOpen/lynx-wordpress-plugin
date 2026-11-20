@@ -1,0 +1,23 @@
+/**
+ * Inline values in the editor canvas. Loaded only in the editor.
+ *
+ * live.js adds rules that hide the stored snapshot text (font-size: 0) and
+ * show the current value with ::after at the surrounding text size.
+ */
+
+// Resolves to the parent's font size in px, so the value can be shown at
+// the surrounding text size while the span itself has font-size 0.
+@property --iot-open-lynx-font-size {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 16px;
+}
+
+*:has(> .iot-open-lynx-inline) {
+	--iot-open-lynx-font-size: 1em;
+}
+
+.iot-open-lynx-inline {
+	text-decoration: underline dotted;
+	text-underline-offset: 0.2em;
+}

@@ -3,7 +3,7 @@
  * Plugin Name:       IoT Open Lynx
  * Plugin URI:        https://github.com/IoTOpen/lynx-wordpress-plugin
  * Description:       Show live values from IoT Open Lynx in the block editor.
- * Version:           0.2.0
+ * Version:           0.3.0
  * Requires at least: 6.7
  * Requires PHP:      7.4
  * Author:            IoT Open AB
@@ -26,3 +26,4 @@ require_once IOT_OPEN_LYNX_DIR . 'includes/data.php';
 require_once IOT_OPEN_LYNX_DIR . 'includes/settings.php';
 require_once IOT_OPEN_LYNX_DIR . 'includes/rest.php';
 require_once IOT_OPEN_LYNX_DIR . 'includes/block.php';
+require_once IOT_OPEN_LYNX_DIR . 'includes/inline.php';

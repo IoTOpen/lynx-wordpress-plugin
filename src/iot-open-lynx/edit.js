@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
 import {
 	useBlockProps,
 	InspectorControls,
@@ -11,70 +10,12 @@ import {
 	RangeControl,
 	ToggleControl,
 	ExternalLink,
-	Notice,
 	Placeholder,
 	Spinner,
 } from '@wordpress/components';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import ServerSideRender from '@wordpress/server-side-render';
 
-const NS = '/iot-open-lynx/v1';
-
-/**
- * Fetches a list from the plugin REST API whenever `path` changes.
- * A null path means "not ready yet".
- *
- * @param {string|null} path REST path.
- * @return {{items: Array|null, error: string|null}} State.
- */
-function useList( path ) {
-	const [ state, setState ] = useState( { items: null, error: null } );
-
-	useEffect( () => {
-		if ( ! path ) {
-			setState( { items: null, error: null } );
-			return;
-		}
-		let cancelled = false;
-		setState( { items: null, error: null } );
-		apiFetch( { path } )
-			.then( ( items ) => {
-				if ( ! cancelled ) {
-					setState( {
-						items: Array.isArray( items ) ? items : [],
-						error: null,
-					} );
-				}
-			} )
-			.catch( ( err ) => {
-				if ( ! cancelled ) {
-					setState( {
-						items: [],
-						error:
-							err?.message ||
-							__( 'Could not load data.', 'iot-open-lynx' ),
-					} );
-				}
-			} );
-		return () => {
-			cancelled = true;
-		};
-	}, [ path ] );
-
-	return state;
-}
-
-function options( items, extra = [] ) {
-	return [
-		{ label: __( '— Select —', 'iot-open-lynx' ), value: '' },
-		...( items || [] ).map( ( item ) => ( {
-			label: item.name || `#${ item.id }`,
-			value: String( item.id ),
-		} ) ),
-		...extra,
-	];
-}
+import { SourceControls, useSourceLists } from '../shared/source';
 
 export default function Edit( { attributes, setAttributes } ) {
 	const {
@@ -96,36 +37,8 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const blockProps = useBlockProps();
 
-	const backends = useList( `${ NS }/backends` );
-	const installations = useList(
-		lynxId
-			? addQueryArgs( `${ NS }/installations`, { backend: lynxId } )
-			: null
-	);
-	const devices = useList(
-		lynxId && installationId
-			? addQueryArgs( `${ NS }/devices`, {
-					backend: lynxId,
-					installation: installationId,
-			  } )
-			: null
-	);
-	const functions = useList(
-		lynxId && installationId && deviceId !== ''
-			? addQueryArgs( `${ NS }/functions`, {
-					backend: lynxId,
-					installation: installationId,
-					device: deviceId || 0,
-			  } )
-			: null
-	);
-
-	// Pick the backend automatically when there is only one.
-	useEffect( () => {
-		if ( ! lynxId && backends.items?.length === 1 ) {
-			setAttributes( { lynxId: backends.items[ 0 ].id } );
-		}
-	}, [ lynxId, backends.items, setAttributes ] );
+	const lists = useSourceLists( { lynxId, installationId, deviceId } );
+	const backends = lists.backends;
 
 	const backend = backends.items?.find( ( b ) => b.id === lynxId );
 	const toggle = ( key ) => ( value ) =>
@@ -136,93 +49,11 @@ export default function Edit( { attributes, setAttributes } ) {
 	const settings = (
 		<InspectorControls>
 			<PanelBody title={ __( 'Source', 'iot-open-lynx' ) }>
-				{ backends.items?.length === 0 && ! backends.error && (
-					<Notice status="warning" isDismissible={ false }>
-						{ __(
-							'No backends configured. Add one under Settings → IoT Open Lynx.',
-							'iot-open-lynx'
-						) }
-					</Notice>
-				) }
-				{ [ backends, installations, devices, functions ]
-					.filter( ( s ) => s.error )
-					.map( ( s, i ) => (
-						<Notice
-							key={ i }
-							status="error"
-							isDismissible={ false }
-						>
-							{ s.error }
-						</Notice>
-					) ) }
-
-				{ backends.items?.length > 1 && (
-					<SelectControl
-						__nextHasNoMarginBottom
-						label={ __( 'Backend', 'iot-open-lynx' ) }
-						value={ lynxId }
-						options={ options( backends.items ) }
-						onChange={ ( value ) =>
-							setAttributes( {
-								lynxId: value,
-								installationId: '',
-								deviceId: '',
-								functionId: '',
-							} )
-						}
-					/>
-				) }
-
-				{ lynxId && (
-					<SelectControl
-						__nextHasNoMarginBottom
-						label={ __( 'Installation', 'iot-open-lynx' ) }
-						value={ installationId }
-						options={ options( installations.items ) }
-						disabled={ ! installations.items }
-						onChange={ ( value ) =>
-							setAttributes( {
-								installationId: value,
-								deviceId: '',
-								functionId: '',
-							} )
-						}
-					/>
-				) }
-
-				{ lynxId && installationId && (
-					<SelectControl
-						__nextHasNoMarginBottom
-						label={ __( 'Device', 'iot-open-lynx' ) }
-						value={ deviceId }
-						options={ options( devices.items, [
-							{
-								label: __(
-									'All functions (no device)',
-									'iot-open-lynx'
-								),
-								value: '0',
-							},
-						] ) }
-						disabled={ ! devices.items }
-						onChange={ ( value ) =>
-							setAttributes( { deviceId: value, functionId: '' } )
-						}
-					/>
-				) }
-
-				{ lynxId && installationId && deviceId !== '' && (
-					<SelectControl
-						__nextHasNoMarginBottom
-						label={ __( 'Function', 'iot-open-lynx' ) }
-						value={ functionId }
-						options={ options( functions.items ) }
-						disabled={ ! functions.items }
-						onChange={ ( value ) =>
-							setAttributes( { functionId: value } )
-						}
-					/>
-				) }
+				<SourceControls
+					source={ { lynxId, installationId, deviceId, functionId } }
+					onChange={ setAttributes }
+					lists={ lists }
+				/>
 
 				{ backend?.base_uri && installationId && functionId && (
 					<div className="iot-open-lynx-links">

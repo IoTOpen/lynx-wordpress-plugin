@@ -4,7 +4,7 @@ Tags:              iot, sensor, block, live data, dashboard
 Requires at least: 6.7
 Tested up to:      6.8
 Requires PHP:      7.4
-Stable tag:        0.2.0
+Stable tag:        0.3.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,13 +19,14 @@ IoT Open Lynx, for example a temperature, a water level or the state of a door.
 * Rendered on the server and refreshed in the browser at a configurable interval.
 * Formatting follows the function settings in Lynx.
 * Colors, font sizes and which fields to show are configurable per block.
+* Inline values: put a live value inside running text with the "Lynx value" button in the rich text toolbar.
 * The API key stays on the server. Visitors can only read the values that are published in blocks.
 
 == Installation ==
 
 1. Upload the plugin and activate it.
 2. Go to Settings → IoT Open Lynx and add a backend (base URI and API key, or leave the key empty for the public API).
-3. Add the "IoT Open Lynx value" block to a post or page.
+3. Add the "IoT Open Lynx value" block to a post or page, or use the "Lynx value" button in the paragraph toolbar (under the ▾ menu) to put a value inside text.
 
 == Frequently Asked Questions ==
 
@@ -38,6 +39,10 @@ Create a dedicated Lynx user with read access to the installations you want to s
 Yes. Add a `wp_name` metadata field to the function or device in Lynx.
 
 == Changelog ==
+
+= 0.3.0 =
+* New: inline values. A rich text format that shows a live value, name or update time inside running text.
+* The editor shows the current value of inline values, without marking the post as changed.
 
 = 0.2.0 =
 * Security: editor REST routes require the edit_posts capability; public value requests must carry a per-block signature.
