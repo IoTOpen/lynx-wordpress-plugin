@@ -24,16 +24,16 @@ function iot_open_lynx_can_edit() {
 /**
  * Converts a list of Lynx objects to [{id, name}] sorted by name.
  *
- * @param array|WP_Error $list List.
+ * @param array|WP_Error $items List.
  * @return array|WP_Error
  */
-function iot_open_lynx_id_name_list( $list ) {
-	if ( is_wp_error( $list ) ) {
-		$list->add_data( array( 'status' => 502 ) );
-		return $list;
+function iot_open_lynx_id_name_list( $items ) {
+	if ( is_wp_error( $items ) ) {
+		$items->add_data( array( 'status' => 502 ) );
+		return $items;
 	}
 	$out = array();
-	foreach ( $list as $item ) {
+	foreach ( $items as $item ) {
 		if ( ! isset( $item->id ) ) {
 			continue;
 		}

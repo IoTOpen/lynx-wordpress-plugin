@@ -248,15 +248,15 @@ class IoT_Open_Lynx_Client {
 	/**
 	 * Finds an object by id in a list.
 	 *
-	 * @param array|WP_Error $list List of objects.
+	 * @param array|WP_Error $items List of objects.
 	 * @param int            $id   Id.
 	 * @return object|null
 	 */
-	private function find( $list, $id ) {
-		if ( is_wp_error( $list ) ) {
+	private function find( $items, $id ) {
+		if ( is_wp_error( $items ) ) {
 			return null;
 		}
-		foreach ( $list as $item ) {
+		foreach ( $items as $item ) {
 			if ( isset( $item->id ) && (int) $item->id === (int) $id ) {
 				return $item;
 			}

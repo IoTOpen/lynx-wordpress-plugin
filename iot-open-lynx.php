@@ -21,7 +21,7 @@ define( 'IOT_OPEN_LYNX_FILE', __FILE__ );
 define( 'IOT_OPEN_LYNX_DIR', plugin_dir_path( __FILE__ ) );
 define( 'IOT_OPEN_LYNX_URL', plugin_dir_url( __FILE__ ) );
 
-require_once IOT_OPEN_LYNX_DIR . 'includes/class-client.php';
+require_once IOT_OPEN_LYNX_DIR . 'includes/class-iot-open-lynx-client.php';
 require_once IOT_OPEN_LYNX_DIR . 'includes/data.php';
 require_once IOT_OPEN_LYNX_DIR . 'includes/settings.php';
 require_once IOT_OPEN_LYNX_DIR . 'includes/rest.php';

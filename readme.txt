@@ -2,7 +2,7 @@
 Contributors:      iotopen
 Tags:              iot, sensor, block, live data, dashboard
 Requires at least: 6.7
-Tested up to:      6.8
+Tested up to:      7.1
 Requires PHP:      7.4
 Stable tag:        0.3.0
 License:           GPL-2.0-or-later
@@ -21,6 +21,33 @@ IoT Open Lynx, for example a temperature, a water level or the state of a door.
 * Colors, font sizes and which fields to show are configurable per block.
 * Inline values: put a live value inside running text with the "Lynx value" button in the rich text toolbar.
 * The API key stays on the server. Visitors can only read the values that are published in blocks.
+
+Source code, issue tracker and build instructions: https://github.com/IoTOpen/lynx-wordpress-plugin
+The JavaScript in `build/` is compiled from `src/` (included in the plugin) with `npm run build`.
+
+== External services ==
+
+This plugin connects to IoT Open Lynx, an IoT platform operated by IoT Open AB, to read
+the values it shows. It does nothing until an administrator has added a backend under
+Settings → IoT Open Lynx.
+
+The plugin only talks to the base URI configured for each backend (by default
+https://lynx.iotopen.se). All requests are made by the WordPress server; visitors'
+browsers only talk to your own site.
+
+What is sent, and when:
+
+* When an editor picks installation, device and function in the block editor: the API key
+  and the ids of the selected installation and device.
+* When a page with a block or an inline value is rendered, and when the browser refreshes a
+  value: the API key and the ids of the installation, device and function that are shown.
+  Responses are cached on the server (values for 10 seconds, names for 5 minutes).
+* When an administrator uses "Test connection" on the settings page: the entered API key.
+
+No information about visitors (such as IP addresses or cookies) is sent to Lynx.
+
+IoT Open AB terms of service: TODO-TERMS-URL
+IoT Open AB privacy policy: TODO-PRIVACY-URL
 
 == Installation ==
 

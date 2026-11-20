@@ -82,7 +82,7 @@ Layout:
 | Path | What |
 | --- | --- |
 | `iot-open-lynx.php` | Plugin bootstrap |
-| `includes/class-client.php` | Lynx API client (WordPress HTTP API + transient cache) |
+| `includes/class-iot-open-lynx-client.php` | Lynx API client (WordPress HTTP API + transient cache) |
 | `includes/data.php` | Backend config, value lookup and formatting |
 | `includes/rest.php` | REST routes used by the editor and the front end |
 | `includes/block.php` | Block registration and server-side rendering |
@@ -92,6 +92,26 @@ Layout:
 | `src/inline/` | Inline value rich text format (`index.js`) and its front-end updater (`view.js`) |
 | `src/shared/` | Source picker used by both editors, and the polling code used by both front ends |
 | `src/settings.js` | Settings page UI |
+
+## Publishing to WordPress.org
+
+Tagged releases (`v*`) are deployed to the WordPress.org plugin directory by the
+`deploy-wordpress-org` job in `.github/workflows/ci.yml`, once the plugin has been
+approved and the repository secrets `SVN_USERNAME` and `SVN_PASSWORD` are set.
+Banner, icon and screenshots for the plugin page go in `.wordpress-org/`
+(`banner-772x250.png`, `banner-1544x500.png`, `icon-128x128.png`, `icon-256x256.png`,
+`screenshot-1.png`, …).
+
+Before the first submission:
+
+- [ ] Make this repository public (the readme links to it as the source code).
+- [ ] Replace `TODO-TERMS-URL` and `TODO-PRIVACY-URL` in `readme.txt`.
+- [ ] Set `Contributors` in `readme.txt` to the WordPress.org user name(s) of the
+      account that submits the plugin.
+- [ ] Test on the WordPress version in `Tested up to` and run the
+      [Plugin Check](https://wordpress.org/plugins/plugin-check/) plugin.
+- [ ] Build the zip (`npm ci && npm run build && npm run plugin-zip`) and upload it at
+      https://wordpress.org/plugins/developers/add/.
 
 ## License
 

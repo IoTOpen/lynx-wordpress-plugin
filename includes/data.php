@@ -48,20 +48,20 @@ function iot_open_lynx_sign( $backend_id, $installation_id, $function_id ) {
 /**
  * Picks the display name of a Lynx object; meta.wp_name overrides meta.name.
  *
- * @param object|null $object Lynx object with meta.
+ * @param object|null $item Lynx object with meta.
  * @return string
  */
-function iot_open_lynx_display_name( $object ) {
-	if ( ! $object ) {
+function iot_open_lynx_display_name( $item ) {
+	if ( ! $item ) {
 		return '';
 	}
-	if ( ! empty( $object->meta->wp_name ) ) {
-		return (string) $object->meta->wp_name;
+	if ( ! empty( $item->meta->wp_name ) ) {
+		return (string) $item->meta->wp_name;
 	}
-	if ( ! empty( $object->meta->name ) ) {
-		return (string) $object->meta->name;
+	if ( ! empty( $item->meta->name ) ) {
+		return (string) $item->meta->name;
 	}
-	return isset( $object->name ) ? (string) $object->name : '';
+	return isset( $item->name ) ? (string) $item->name : '';
 }
 
 /**
@@ -121,11 +121,11 @@ function iot_open_lynx_get_value( $backend_id, $installation_id, $function_id ) 
 /**
  * Formats a raw value according to the function type and meta.format.
  *
- * @param object $function Lynx function object.
- * @param mixed  $value    Raw value.
+ * @param object $lynx_function Lynx function object.
+ * @param mixed  $value         Raw value.
  * @return string
  */
-function iot_open_lynx_format_value( $function, $value ) {
+function iot_open_lynx_format_value( $lynx_function, $value ) {
 	if ( null === $value ) {
 		return '';
 	}
@@ -133,7 +133,7 @@ function iot_open_lynx_format_value( $function, $value ) {
 		return (string) $value;
 	}
 
-	$meta  = isset( $function->meta ) ? $function->meta : new stdClass();
+	$meta  = isset( $lynx_function->meta ) ? $lynx_function->meta : new stdClass();
 	$state = static function ( $key ) use ( $meta ) {
 		return isset( $meta->$key ) && is_numeric( $meta->$key ) ? (float) $meta->$key : null;
 	};
@@ -142,7 +142,7 @@ function iot_open_lynx_format_value( $function, $value ) {
 	};
 	$v     = (float) $value;
 
-	switch ( $function->type ?? '' ) {
+	switch ( $lynx_function->type ?? '' ) {
 		case 'movement':
 			if ( $state( 'state_movement' ) === $v ) {
 				return $text( 'text_movement', __( 'Movement', 'iot-open-lynx' ) );

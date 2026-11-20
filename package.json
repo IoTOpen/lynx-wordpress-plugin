@@ -12,10 +12,14 @@
 		"build",
 		"includes",
 		"languages",
+		"src",
 		"iot-open-lynx.php",
 		"uninstall.php",
 		"readme.txt",
-		"LICENSE"
+		"LICENSE",
+		"package.json",
+		"package-lock.json",
+		"webpack.config.js"
 	],
 	"scripts": {
 		"build": "wp-scripts build",

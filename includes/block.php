@@ -59,7 +59,7 @@ function iot_open_lynx_render_block( array $attributes ) {
 		return '';
 	}
 
-	$show     = wp_parse_args(
+	$show = wp_parse_args(
 		(array) ( $attributes['showValues'] ?? array() ),
 		array(
 			'value'            => true,
@@ -79,9 +79,9 @@ function iot_open_lynx_render_block( array $attributes ) {
 	$text_color  = iot_open_lynx_color( $attributes['textColor'] ?? '' );
 	$value_color = iot_open_lynx_color( $attributes['valueColor'] ?? '' );
 	$background  = iot_open_lynx_color( $attributes['backgroundColor'] ?? '' );
-	$size        = static function ( $key, $default ) use ( $attributes ) {
-		$px = (int) ( $attributes[ $key ] ?? $default );
-		return ( $px > 0 ? $px : $default ) . 'px';
+	$size        = static function ( $key, $fallback ) use ( $attributes ) {
+		$px = (int) ( $attributes[ $key ] ?? $fallback );
+		return ( $px > 0 ? $px : $fallback ) . 'px';
 	};
 
 	$data  = iot_open_lynx_get_value( $backend_id, $installation_id, $function_id );
@@ -106,7 +106,15 @@ function iot_open_lynx_render_block( array $attributes ) {
 		)
 	);
 
-	$text_style = array( 'color' => $text_color );
+	$text_style    = array( 'color' => $text_color );
+	$value_style   = array(
+		'color'     => $value_color,
+		'font-size' => $size( 'valueFontSize', 48 ),
+	);
+	$updated_style = $text_style + array(
+		'font-size'  => $size( 'lastUpdatedFontSize', 10 ),
+		'text-align' => $position,
+	);
 
 	ob_start();
 	?>
@@ -119,13 +127,13 @@ function iot_open_lynx_render_block( array $attributes ) {
 				<p class="iot-block-deviceName" data-field="device_name"<?php echo iot_open_lynx_style( $text_style + array( 'font-size' => $size( 'deviceFontSize', 14 ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $data['device_name'] ?? '' ); ?></p>
 			<?php endif; ?>
 			<?php if ( $show['value'] ) : ?>
-				<p class="iot-block-value" data-field="formatted" aria-live="polite"<?php echo iot_open_lynx_style( array( 'color' => $value_color, 'font-size' => $size( 'valueFontSize', 48 ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( ( $data['formatted'] ?? '' ) !== '' ? $data['formatted'] : '–' ); ?></p>
+				<p class="iot-block-value" data-field="formatted" aria-live="polite"<?php echo iot_open_lynx_style( $value_style ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( ( $data['formatted'] ?? '' ) !== '' ? $data['formatted'] : '–' ); ?></p>
 			<?php endif; ?>
 			<?php if ( $show['functionName'] ) : ?>
 				<p class="iot-block-functionName" data-field="function_name"<?php echo iot_open_lynx_style( $text_style + array( 'font-size' => $size( 'functionFontSize', 14 ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $data['function_name'] ?? '' ); ?></p>
 			<?php endif; ?>
 			<?php if ( $show['lastUpdated'] ) : ?>
-				<p class="iot-block-lastUpdated" data-field="updated"<?php echo iot_open_lynx_style( $text_style + array( 'font-size' => $size( 'lastUpdatedFontSize', 10 ), 'text-align' => $position ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $data['updated'] ?? '' ); ?></p>
+				<p class="iot-block-lastUpdated" data-field="updated"<?php echo iot_open_lynx_style( $updated_style ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html( $data['updated'] ?? '' ); ?></p>
 			<?php endif; ?>
 			<?php if ( $show['countdown'] ) : ?>
 				<div class="iot-block-progress-wrapper" aria-hidden="true"><div class="iot-block-progress"<?php echo iot_open_lynx_style( array( 'background-color' => $value_color ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>></div></div>
