@@ -100,7 +100,10 @@ Tagged releases (`v*`) are deployed to the WordPress.org plugin directory by the
 approved and the repository secrets `SVN_USERNAME` and `SVN_PASSWORD` are set.
 Banner, icon and screenshots for the plugin page go in `.wordpress-org/`
 (`banner-772x250.png`, `banner-1544x500.png`, `icon-128x128.png`, `icon-256x256.png`,
-`screenshot-1.png`, …).
+`screenshot-1.png`, …). The banner and icon are rendered from the SVG sources in
+`design/` (Inter font) with
+`inkscape design/banner.svg -w 1544 -h 500 -o .wordpress-org/banner-1544x500.png`
+and the same for the other sizes.
 
 Before the first submission:
 

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+	<defs>
+		<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0" stop-color="#11506a"/>
+			<stop offset="1" stop-color="#0a2f40"/>
+		</linearGradient>
+		<linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#12b1be" stop-opacity="0.45"/>
+			<stop offset="1" stop-color="#12b1be" stop-opacity="0"/>
+		</linearGradient>
+	</defs>
+	<rect width="256" height="256" fill="url(#bg)"/>
+
+	<!-- Faint node grid -->
+	<g fill="#ffffff" fill-opacity="0.08">
+		<circle cx="48" cy="48" r="7"/><circle cx="88" cy="48" r="7"/><circle cx="128" cy="48" r="7"/>
+		<circle cx="168" cy="48" r="7"/><circle cx="208" cy="48" r="7"/>
+		<circle cx="48" cy="88" r="7"/><circle cx="88" cy="88" r="7"/><circle cx="128" cy="88" r="7"/>
+		<circle cx="168" cy="88" r="7"/>
+	</g>
+
+	<!-- Value history -->
+	<path d="M28 196 L72 158 L108 176 L148 120 L184 138 L208 92 L208 228 L28 228 Z" fill="url(#area)"/>
+	<path d="M28 196 L72 158 L108 176 L148 120 L184 138 L208 92" fill="none" stroke="#12b1be" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+
+	<!-- Live value -->
+	<circle cx="208" cy="92" r="30" fill="#12b1be" fill-opacity="0.22"/>
+	<circle cx="208" cy="92" r="17" fill="#ffffff"/>
+	<circle cx="208" cy="92" r="10" fill="#12b1be"/>
+</svg>
