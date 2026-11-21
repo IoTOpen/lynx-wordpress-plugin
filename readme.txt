@@ -64,6 +64,12 @@ Create a dedicated Lynx user with read access to the installations you want to s
 
 Yes. Add a `wp_name` metadata field to the function or device in Lynx.
 
+== Screenshots ==
+
+1. Live values on a page: three blocks and values inside running text.
+2. The block in the editor. Pick backend, installation, device and function, and choose what to show.
+3. Putting a live value inside a paragraph with the "Lynx value" button.
+
 == Changelog ==
 
 = 0.3.5 =
